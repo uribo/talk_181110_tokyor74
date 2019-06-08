@@ -11,6 +11,7 @@ fontsize: 12pt
 ---
 
 ```{r,setup, include=FALSE}
+source(here::here("code.R"))
 library(magrittr)
 knitr::opts_chunk$set(cache = TRUE,
                       warning = FALSE, 
@@ -117,7 +118,7 @@ ggplot() +
   ggtitle("2018年8月15日は降水日であったか",
           "降水日の基準は一日の降水量が0.1mm以上")
 
-ggsave(here::here("figures", "rain.png"),
+ggsave(here::here("figures/rain.png"),
        last_plot(),
        bg = "#fafafa",
        width  = 5, 
@@ -125,7 +126,7 @@ ggsave(here::here("figures", "rain.png"),
        dpi = 300)
 ```
 
-![](`r here::here("figures", "rain.png")`)
+![](`r here::here("figures/rain.png")`)
 
 # 1/2 Spatial Cross-Validation
 
@@ -226,14 +227,14 @@ p_out <-
           labels = plots[["Labels"]], 
           label_size = 4)
 
-ggsave(here::here("figures", "Rplot.png"),
+ggsave(here::here("figures/Rplot.png"),
        p_out,
        width = 8,
        height = 4,
        dpi = "retina")
 ```
 
-![](`r here::here("figures", "Rplot.png")`)
+![](`r here::here("figures/Rplot.png")`)
 
 # 2.2 Target-oriented cross-validation
 
@@ -306,7 +307,7 @@ indices <-
   CAST::CreateSpacetimeFolds(
     df_train,
     spacevar = "station_no",
-    k        = 5,
+    k        = 10,
     seed     = 123)
 ```
 

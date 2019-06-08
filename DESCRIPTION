@@ -1,17 +1,28 @@
 Package: talk181110tokyor
-Title: What are the minimum dependencies for your package?
+Title: Reproducible enviromment using binder.
 Encoding: UTF-8
 Depends:
+    assertr,
     caret,
     CAST,
+    cowplot,
     dplyr,
     ggplot2,
+    here,
+    hrbrthemes,
+    jmastats,
     mlr,
+    rnaturalearth,
+    rnaturalearthhires,
     purrr,
+    randomForest,
+    ranger,
     readr,
     rlang,
     sf,
     tidyr,
-    jmastats
+    vctrs
 Remotes:
-    gitlab::uribo/jmastats
+    gitlab::uribo/jmastats,
+    ropenscilabs/rnaturalearthhires,
+    r-lib/vctrs

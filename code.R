@@ -3,6 +3,11 @@ library(sf)
 library(ggplot2)
 library(jmastats)
 
+vec_proxy.sfc <- function(x) {
+  class(x) <- setdiff(class(x), "sfc")
+  vctrs::vec_proxy(x)
+}
+
 # 1. Data collect ----------------------------------------------------
 # remotes::install_git("https://gitlab.com/uribo/jmastats")
 
@@ -31,7 +36,7 @@ if (rlang::is_false(file.exists(here::here("data-raw/weather.rds")))) {
                                         ~ .x %>% 
                                           jmastats::parse_unit() %>%
                                           mutate_at(vars(c("precipitation_mm", "temperature")),
-                                                    funs(as.numeric)) %>% 
+                                                    list(as.numeric)) %>% 
                                           summarise(
                                             precipitation_sum = sum(precipitation_mm, na.rm = TRUE),
                                             temperature_mean = mean(temperature, na.rm = TRUE),
@@ -44,7 +49,8 @@ if (rlang::is_false(file.exists(here::here("data-raw/weather.rds")))) {
     select(station_no,
            elevation, 
            starts_with("temperature"), 
-           precipitation_sum, rainy)
+           precipitation_sum, rainy) %>% 
+    assertr::verify(data = ., expr = dim(.) == c(688, 8))
   readr::write_rds(df_weather_20180815, 
-                   here::here("data-raw/weather.rds"))  
+                   here::here("data-raw/weather.rds"), compress = "xz")  
 }
