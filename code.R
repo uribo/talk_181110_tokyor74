@@ -4,11 +4,13 @@ library(ggplot2)
 library(jmastats)
 
 # 1. Data collect ----------------------------------------------------
-# devtools::install_git("https://gitlab.com/uribo/jmastats")
+# remotes::install_git("https://gitlab.com/uribo/jmastats")
 
-if (rlang::is_false(file.exists(here::here("data-raw", "weather.rds")))) {
+if (rlang::is_false(file.exists(here::here("data-raw/weather.rds")))) {
+  if (rlang::is_false(dir.exists(here::here("data-raw"))))
+    dir.create(here::here("data-raw"))
   data("stations", package = "jmastats")
-  
+  # Access to JMA website
   df_weather_20180815 <-
     stations %>%
     filter(station_type == "四") %>%
@@ -43,7 +45,6 @@ if (rlang::is_false(file.exists(here::here("data-raw", "weather.rds")))) {
            elevation, 
            starts_with("temperature"), 
            precipitation_sum, rainy)
-  
   readr::write_rds(df_weather_20180815, 
-                   here::here("data-raw", "weather.rds"))  
+                   here::here("data-raw/weather.rds"))  
 }

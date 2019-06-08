@@ -11,7 +11,7 @@ library(dplyr)
 
 ## ---- eval = TRUE, echo = FALSE------------------------------------------
 df_weather_20180815 <- 
-  readr::read_rds(here::here("data-raw", "weather.rds"))
+  readr::read_rds(here::here("data-raw/weather.rds"))
 
 ## ---- eval = FALSE, echo = FALSE-----------------------------------------
 ## library(ggplot2)
