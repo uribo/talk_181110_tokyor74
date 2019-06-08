@@ -1,0 +1,17 @@
+Package: talk181110tokyor
+Title: What are the minimum dependencies for your package?
+Encoding: UTF-8
+Depends:
+    caret,
+    CAST,
+    dplyr,
+    ggplot2,
+    mlr,
+    purrr,
+    readr,
+    rlang,
+    sf,
+    tidyr,
+    jmastats
+Remotes:
+    gitlab::uribo/jmastats
