@@ -1,4 +1,4 @@
-FROM rocker/binder:3.6.0
+FROM uribo/tokyor74
 
 ## Declares build arguments
 ARG NB_USER
