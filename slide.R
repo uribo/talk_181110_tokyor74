@@ -35,6 +35,7 @@ df_weather_20180815 <-
 ##   coord_sf(datum = NA) +
 ##   theme_light(base_family = "IPAexGothic",
 ##               base_size = 8) +
+##   guides(color = guide_legend(reverse = TRUE)) +
 ##   theme(rect = element_rect(fill = "#fafafa"),
 ##         plot.background = element_rect(
 ##           fill = "#fafafa",
@@ -53,7 +54,7 @@ df_weather_20180815 <-
 ## ggsave(here::here("figures/rain.png"),
 ##        last_plot(),
 ##        bg = "#fafafa",
-##        width  = 5,
+##        width  = 6,
 ##        height = 4,
 ##        dpi = 300)
 
@@ -75,6 +76,7 @@ library(mlr)
 spatial_task <- 
   makeClassifTask(target = "rainy", 
                   data = as.data.frame(df_train), 
+                  # データに対応する空間配置を指定
                   coordinates = as.data.frame(coords),
                   positive = "TRUE")
 
@@ -84,7 +86,6 @@ learner_rf <-
 
 
 ## ---- eval = TRUE, echo = TRUE, results = "hide"-------------------------
-# データがランダムに記録されていることを想定し、RepCV
 resampling_cv <- makeResampleDesc(method = "RepCV", 
                    folds = 5, reps = 5)
 set.seed(123)
@@ -112,23 +113,23 @@ mean(sp_cv_out$measures.test$auc, na.rm = TRUE)
 
 
 ## ---- eval = FALSE, echo = FALSE-----------------------------------------
+## library(cowplot)
+## theme_set(theme_void(base_size = 4, base_family = "IPAexGothic"))
+## 
 ## plots <-
 ##   createSpatialResamplingPlots(
 ##     spatial_task,
 ##     list("RepCV"   = cv_out,
 ##          "SpRepCV" = sp_cv_out),
 ##     crs = 4326,
+##     datum = NA,
 ##     repetitions = 1)
-## 
-## library(cowplot)
-## theme_set(theme_gray(base_size = 4, base_family = "sans"))
 ## p_out <-
 ##   plot_grid(plotlist = plots[["Plots"]],
 ##           ncol = 5,
 ##           nrow = 2,
 ##           labels = plots[["Labels"]],
 ##           label_size = 4)
-## 
 ## ggsave(here::here("figures/Rplot.png"),
 ##        p_out,
 ##        width = 8,
@@ -183,7 +184,6 @@ indices <-
 
 ## ------------------------------------------------------------------------
 set.seed(123)
-
 model_LLO <- 
   train(
     df_train[, c("elevation", "temperature_mean")],
