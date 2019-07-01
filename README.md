@@ -9,7 +9,7 @@ Spatial Cross Validation with R - Tokyo.R#74
 ## Local build
 
 ```bash
-docker build -t uribo/tokyor74
+docker build -t uribo/tokyor74 .
 docker login
 
 docker push uribo/tokyor74
